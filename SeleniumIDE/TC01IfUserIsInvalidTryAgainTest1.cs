@@ -25,7 +25,11 @@ namespace Tests
             options.AddArgument("disable-gpu");
             options.AddArgument("window-size=1920x1080");
 
-            driver = new ChromeDriver();
+            string userDataDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(userDataDir);
+            options.AddArguments($"--user-data-dir={userDataDir}");
+
+            driver = new ChromeDriver(options);
             js = (IJavaScriptExecutor)driver;
             vars = new Dictionary<string, object>();
         }
